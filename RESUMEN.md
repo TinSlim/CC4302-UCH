@@ -434,6 +434,14 @@ void nSignalSem (nSem s) {
 }
 ```
 
+```c
+void Vtimerhandler() {
+    setAlarm(virtualtimer,currentslice,vTimerHandler);
+    PutTask(ready_queue,current_task);
+    Resume();
+}
+
+
 
 
 
