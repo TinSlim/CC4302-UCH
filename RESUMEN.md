@@ -492,6 +492,17 @@ nWaitCondition(noEmpty); // Espera una condición
 nDestroyCondition(cond); // Destruye condición
 ```
 
+### Mensajes
+
+```c
+int nSend(task,msg); Envía un mensaje a una tarea
+
+nTask* emisor;
+void* nReceive(emisor,timeout); // Retorna un mensaje y guarda quien se lo envió
+
+int nReply(emisor,rc); // Envía respuesta rc a emisor
+```
+
 ### Queues
 
 #### Fifo
