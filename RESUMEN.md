@@ -40,7 +40,7 @@ double fact (int n) {
     return prod;
 }
 
-int producto (int i, int j, double *pres, int p) {
+void producto (int i, int j, double *pres, int p) {
     if (p==1 || j-i < 20) {
         int k;
         double prod = 1.0;
@@ -110,7 +110,7 @@ nSem full;// = nMakeSem(0);
 void put(Item x) {
     nWaitSem(empty);
     buf[nextempty] = x;
-    nextempty = (nextempty + 1) % N);
+    nextempty = (nextempty + 1) % N;
     nSignalSem(full);
 }
 
@@ -441,10 +441,99 @@ void Vtimerhandler() {
     Resume();
 }
 
+```
 
+-----
 
+## Funciones
 
+### Tareas
 
+```c
+nTask nEmitTask (int (*f) (...),...); // Emite tarea - recibe función, args
 
+nWaitTask(t); // Espera tarea - recibe tarea
+```
+
+### Semáforos
+```c
+nSem empty = nMakeSem(N); // Crea un semáforo de N tickets
+
+nSignalSem(full); // Agrea un ticket a un semáforo
+
+nWaitSem(empty); // Espera el ticket de un semáforo
+
+nDestroySem(sem); // Destruye semáforo
+```
+
+### Monitor / Condiciones
+
+```c
+nMonitor m = nMakeMonitor(); // Crea un monitor
+
+nEnter(m); // Entra al monitor
+
+nExit(m); // Libera al monitor
+
+nWait(m); // Espera un monitor
+
+nNotifyAll(m); // Notifica a todos los que esperan un monitor
+
+nDestroyMonitor(mon); // Destruye monitor
+
+/////////////////////////////////////
+
+nCondition nofull = nMakeCondition(monito); // Crea una condición, recibe un monitor
+
+nSignalCondition(notEmpty); // Notifica a una condición
+
+nWaitCondition(noEmpty); // Espera una condición
+
+nDestroyCondition(cond); // Destruye condición
+```
+
+### Queues
+
+#### Fifo
+
+```c
+FifoQueue queue = nMakeFifoQueue(); // Crea una fifo queue
+
+GetObj(queue); // Obtiene un objeto de la queue
+
+PutObj(queue, &obj); // Agrega un objeto a la queue
+
+EmptyFifoQueue(queue); // Revisa si la queue está vacía
+
+```
+
+#### Queue
+
+```c
+Queue q = MakeQueue(); // Crea una queue
+
+GetTask(queue); // Obtiene una tarea de la queue
+
+EmptyQueue(queue); // Revisa si una queue está vacía
+
+PutTask(queue,task); // Agrega tarea a queue
+
+PushTask(queue,task); // Agrega tarea a queue
+```
+
+### Otros
+
+```c
+START_CRITICAL(); // inhibe interrupciones
+
+END_CRITICAL(); // permite interrupciones
+
+ResumeNextReadyTask(); // Resume tarea de ready_queue
+
+nTask current_task; // Tarea actual
+
+```
+
+-----
 
 
